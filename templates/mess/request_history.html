@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}Request history | MessMate{% endblock %}
+
+{% block content %}
+  <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between mb-4">
+    <div>
+      <div class="h4 fw-semibold mb-1 d-flex align-items-center gap-2">
+        <i class="bi bi-journal-text text-danger"></i> Request history
+      </div>
+      <div class="text-muted small">Cancellations are only allowed for upcoming windows.</div>
+    </div>
+    <div class="d-flex flex-wrap gap-2">
+      <a class="btn btn-mess-primary" href="{% url 'meal_absence_create' %}"><i class="bi bi-plus-lg me-1"></i> Meal absence</a>
+      <a class="btn btn-outline-mess" href="{% url 'leave_request_create' %}"><i class="bi bi-suitcase-lg me-1"></i> Leave</a>
+    </div>
+  </div>
+
+  <div class="card card-mess mb-4">
+    <div class="card-body">
+      <div class="fw-semibold mb-3"><i class="bi bi-cup-hot me-2 text-warning"></i> Meal absence requests</div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle table-mess mb-0">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Meal</th>
+              <th>Reason</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for a in meal_absences %}
+              <tr>
+                <td>{{ a.date }}</td>
+                <td>{{ a.get_meal_type_display }}</td>
+                <td class="text-muted">{{ a.reason|default:"—" }}</td>
+                <td class="text-end">
+                  {% if a.date >= today %}
+                    <form class="d-inline" method="post" action="{% url 'cancel_meal_absence' a.id %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-danger" type="submit">Cancel</button>
+                    </form>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Past</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4" class="text-muted">No meal absence requests yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-mess">
+    <div class="card-body">
+      <div class="fw-semibold mb-3"><i class="bi bi-suitcase-lg me-2 text-secondary"></i> Leave requests</div>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle table-mess mb-0">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>To</th>
+              <th>Reason</th>
+              <th class="text-end">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for l in leave_requests %}
+              <tr>
+                <td>{{ l.from_date }}</td>
+                <td>{{ l.to_date }}</td>
+                <td class="text-muted">{{ l.reason|default:"—" }}</td>
+                <td class="text-end">
+                  {% if l.to_date >= today %}
+                    <form class="d-inline" method="post" action="{% url 'cancel_leave_request' l.id %}">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-danger" type="submit">Cancel</button>
+                    </form>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Past</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% empty %}
+              <tr><td colspan="4" class="text-muted">No leave requests yet.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

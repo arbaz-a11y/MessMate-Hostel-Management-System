@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Leave request | MessMate{% endblock %}
+
+{% block content %}
+  <div class="card card-mess">
+    <div class="card-body p-4">
+      <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+        <div>
+          <div class="h4 fw-semibold mb-1 d-flex align-items-center gap-2">
+            <i class="bi bi-airplane text-secondary"></i> Multi-day leave
+          </div>
+          <div class="text-muted small">
+            Applies to breakfast, lunch, and dinner throughout the inclusive date range.
+          </div>
+        </div>
+        <a class="btn btn-outline-mess btn-sm" href="{% url 'request_history' %}"><i class="bi bi-clock-history me-1"></i> History</a>
+      </div>
+
+      <div class="alert alert-warning small">
+        <i class="bi bi-info-circle me-1"></i>
+        This leave means you will be absent for <span class="fw-semibold">all meals</span> between the selected dates.
+      </div>
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <div class="row g-3">
+          <div class="col-12 col-md-4">
+            <label class="form-label">From date</label>
+            {{ form.from_date }}
+            <div class="text-danger small">{{ form.from_date.errors }}</div>
+          </div>
+          <div class="col-12 col-md-4">
+            <label class="form-label">To date</label>
+            {{ form.to_date }}
+            <div class="text-danger small">{{ form.to_date.errors }}</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Reason</label>
+            {{ form.reason }}
+            <div class="text-danger small">{{ form.reason.errors }}</div>
+          </div>
+        </div>
+
+        <div class="mt-4 d-flex flex-wrap gap-2">
+          <button class="btn btn-mess-primary" type="submit"><i class="bi bi-send me-1"></i> Submit leave</button>
+          <a class="btn btn-outline-secondary" href="{% url 'student_dashboard' %}">Dashboard</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "mess/admin_shell.html" %}
+{% block title %}{{ form_title }} | MessMate{% endblock %}
+
+{% block admin_main %}
+  <div class="mb-4">
+    <a class="btn btn-sm btn-outline-secondary" href="{% if profile %}{% url 'admin_student_detail' profile.pk %}{% else %}{% url 'admin_student_records' %}{% endif %}">
+      <i class="bi bi-arrow-left me-1"></i> Back
+    </a>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card card-mess">
+        <div class="card-body p-4">
+          <div class="h4 fw-semibold mb-1">{{ form_title }}</div>
+          <p class="text-muted small mb-4">Fields marked with credentials are used for student login (USN + password).</p>
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.full_name.id_for_label }}">Name</label>
+              {{ form.full_name }}
+              <div class="text-danger small">{{ form.full_name.errors }}</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.usn.id_for_label }}">USN</label>
+              {{ form.usn }}
+              <div class="form-text">Must start with 2AB and be exactly 10 characters.</div>
+              <div class="text-danger small">{{ form.usn.errors }}</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+              {{ form.email }}
+              <div class="text-danger small">{{ form.email.errors }}</div>
+            </div>
+
+            {% if form.room_number %}
+              <div class="mb-3">
+                <label class="form-label" for="{{ form.room_number.id_for_label }}">Room number</label>
+                {{ form.room_number }}
+                <div class="text-danger small">{{ form.room_number.errors }}</div>
+              </div>
+            {% endif %}
+
+            <div class="mb-3">
+              <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+              {{ form.password }}
+              {% if form.password.help_text %}
+                <div class="form-text">{{ form.password.help_text }}</div>
+              {% endif %}
+              <div class="text-danger small">{{ form.password.errors }}</div>
+            </div>
+
+            {% if form.is_active %}
+              <div class="mb-4 form-check">
+                {{ form.is_active }}
+                <label class="form-check-label" for="{{ form.is_active.id_for_label }}">Account active</label>
+                <div class="text-danger small">{{ form.is_active.errors }}</div>
+              </div>
+            {% else %}
+              <div class="mb-4"></div>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-mess-primary" type="submit">{{ form_submit_label }}</button>
+              <a class="btn btn-outline-secondary" href="{% if profile %}{% url 'admin_student_detail' profile.pk %}{% else %}{% url 'admin_student_records' %}{% endif %}">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

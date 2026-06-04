@@ -1,0 +1,90 @@
+{% extends "mess/admin_shell.html" %}
+{% block title %}Student management | MessMate{% endblock %}
+
+{% block admin_main %}
+  <div class="d-flex flex-wrap gap-3 align-items-end justify-content-between mb-4">
+    <div>
+      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
+        <i class="bi bi-people-fill text-danger"></i> Student management
+      </div>
+      <div class="text-muted small">Create and maintain student accounts for the hostel mess.</div>
+    </div>
+    <a class="btn btn-mess-primary" href="{% url 'admin_student_create' %}">
+      <i class="bi bi-person-plus me-1"></i> Add student
+    </a>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-sm-6">
+      <div class="card card-mess h-100">
+        <div class="card-body">
+          <div class="text-muted small">Total students</div>
+          <div class="h3 mb-0">{{ students_count }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="card card-mess h-100">
+        <div class="card-body">
+          <div class="text-muted small">Active students</div>
+          <div class="h3 mb-0">{{ active_students_count }}</div>
+          <div class="small text-muted mt-1">Accounts enabled for login</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form method="get" class="row g-2 align-items-center mb-4">
+    <div class="col-12 col-md">
+      <input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search by name, USN, or email">
+    </div>
+    <div class="col-auto d-flex gap-2">
+      <button class="btn btn-mess-primary" type="submit"><i class="bi bi-search me-1"></i> Search</button>
+      <a class="btn btn-outline-secondary" href="{% url 'admin_student_records' %}">Reset</a>
+    </div>
+  </form>
+
+  <div class="card card-mess">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle table-mess mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>USN</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for s in students %}
+              <tr>
+                <td class="fw-semibold">{{ s.full_name }}</td>
+                <td>{{ s.usn }}</td>
+                <td class="text-muted">{{ s.email }}</td>
+                <td>
+                  {% if s.user.is_active %}
+                    <span class="badge text-bg-success">Active</span>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Inactive</span>
+                  {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                  <a class="btn btn-sm btn-outline-mess" href="{% url 'admin_student_detail' s.pk %}">Profile</a>
+                  <a class="btn btn-sm btn-outline-secondary" href="{% url 'admin_student_edit' s.pk %}">Edit</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-muted py-4 text-center">
+                  No students found.{% if q %} Try a different search.{% else %} Add your first student to get started.{% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

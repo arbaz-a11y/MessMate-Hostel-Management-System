@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block layout_columns %}
+  <div class="row g-4">
+    <aside class="col-12 col-lg-3">
+      {% include "mess/includes/admin_sidebar.html" %}
+    </aside>
+    <div class="col-12 col-lg-9">
+      {% block admin_main %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}

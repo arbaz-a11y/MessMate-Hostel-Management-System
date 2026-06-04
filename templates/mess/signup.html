@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Student signup | MessMate{% endblock %}
+
+{% block content %}
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-7">
+      <div class="card card-mess">
+        <div class="card-body p-4">
+          <div class="d-flex align-items-start justify-content-between gap-4 flex-wrap mb-3">
+            <div class="d-flex align-items-start gap-3">
+              <div class="icon-tile fs-4"><i class="bi bi-person-plus"></i></div>
+              <div>
+                <div class="h4 fw-semibold mb-1">Student signup</div>
+                <div class="text-muted small mb-2">
+                  USNs are validated strictly and normalized to uppercase automatically.
+                </div>
+              </div>
+            </div>
+            <span class="badge rounded-pill text-bg-danger bg-mess-accent align-self-start">New</span>
+          </div>
+
+          <div class="alert alert-info small">
+            <div class="fw-semibold mb-1">USN format</div>
+            <div>
+              Must start with <span class="fw-semibold">2AB</span>, be exactly <span class="fw-semibold">10</span> characters,
+              letters &amp; digits only — e.g. <span class="font-monospace">2AB23CS01</span>
+            </div>
+          </div>
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+            {% endif %}
+
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label">Full name</label>
+                {{ form.full_name }}
+                <div class="text-danger small">{{ form.full_name.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">USN</label>
+                {{ form.usn }}
+                <div class="text-danger small">{{ form.usn.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Email</label>
+                {{ form.email }}
+                <div class="text-danger small">{{ form.email.errors }}</div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label">Room number</label>
+                {{ form.room_number }}
+                <div class="text-danger small">{{ form.room_number.errors }}</div>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Password</label>
+                {{ form.password }}
+                <div class="text-danger small">{{ form.password.errors }}</div>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <button class="btn btn-mess-primary" type="submit"><i class="bi bi-check2-circle me-1"></i> Create account</button>
+              <a class="btn btn-outline-mess ms-2" href="{% url 'login' %}">Already registered?</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,243 @@
+/* Hostel Mess — warm cafeteria palette on top of Bootstrap */
+
+:root {
+  --mess-cream: #faf6ef;
+  --mess-cream-2: #f3eadd;
+  --mess-brown: #3b2918;
+  --mess-brown-soft: #5c4033;
+  --mess-orange: #e86a33;
+  --mess-orange-deep: #c44f24;
+  --mess-ruby: #7d1128;
+  --mess-ruby-dark: #4a0816;
+  --mess-muted: rgba(59, 41, 24, 0.68);
+  --mess-shadow: 0 12px 30px rgba(45, 20, 8, 0.12);
+  --mess-radius-lg: 1.15rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body.hostel-mess {
+  font-feature-settings: "ss01" 1, "ss02" 1;
+}
+
+body {
+  background:
+    radial-gradient(1200px 600px at 10% 0%, rgba(232, 106, 51, 0.15), transparent 55%),
+    radial-gradient(900px 550px at 90% 20%, rgba(125, 17, 40, 0.12), transparent 52%),
+    linear-gradient(to bottom, var(--mess-cream), #ffffff 55%);
+  color: var(--mess-brown);
+  min-height: 100vh;
+}
+
+/* Navbar */
+.navbar-mess {
+  background: linear-gradient(
+    135deg,
+    var(--mess-ruby-dark) 0%,
+    var(--mess-ruby) 45%,
+    var(--mess-orange-deep) 120%
+  ) !important;
+  box-shadow: 0 12px 30px rgba(27, 5, 8, 0.25);
+}
+
+.navbar-mess .navbar-brand {
+  letter-spacing: 0.2px;
+}
+
+.navbar-mess .nav-link {
+  color: rgba(255, 255, 255, 0.92) !important;
+  padding: 0.55rem 0.75rem !important;
+  border-radius: 0.85rem;
+  transition:
+    transform 140ms ease,
+    background-color 140ms ease;
+}
+
+.navbar-mess .nav-link:hover {
+  transform: translateY(-1px);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-mess .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.14);
+}
+
+.btn-mess-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff !important;
+}
+.btn-mess-ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Notification bubble */
+.notif-bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  height: 1.45rem;
+  padding: 0 0.35rem;
+  margin-left: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  color: #fff;
+  background: #dc2626;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 8px 18px rgba(220, 38, 38, 0.22);
+}
+
+/* Cards */
+.card-mess {
+  border: 1px solid rgba(92, 64, 51, 0.12);
+  border-radius: var(--mess-radius-lg);
+  box-shadow: var(--mess-shadow);
+  background: linear-gradient(180deg, #ffffff, #fffaf5);
+}
+
+.card-mess:hover {
+  transform: translateY(-2px);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+  box-shadow: 0 16px 40px rgba(45, 20, 8, 0.14);
+}
+
+.card-mess .card-title,
+.card-mess .h5,
+.card-mess .h6 {
+  color: var(--mess-brown);
+}
+
+.icon-tile {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(232, 106, 51, 0.15), rgba(125, 17, 40, 0.12));
+  color: var(--mess-ruby);
+}
+
+/* Tables */
+.table-mess thead th {
+  color: var(--mess-brown-soft);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(92, 64, 51, 0.16);
+}
+
+/* Sidebar links */
+.sidebar-mess {
+  border-radius: var(--mess-radius-lg);
+  border: 1px solid rgba(92, 64, 51, 0.12);
+  background: linear-gradient(180deg, #ffffff, #fff7ee);
+}
+
+.sidebar-mess .list-group-item {
+  padding: 0.75rem 1rem !important;
+  border-radius: 0.85rem !important;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-mess .list-group-item-action:hover {
+  background: rgba(232, 106, 51, 0.1);
+}
+
+.sidebar-mess .list-group-item.active {
+  background: linear-gradient(135deg, rgba(232, 106, 51, 0.18), rgba(125, 17, 40, 0.12));
+  border-color: transparent;
+  color: var(--mess-brown);
+}
+
+/* Hero */
+.hero-mess {
+  border-radius: calc(var(--mess-radius-lg) + 0.25rem);
+  border: 1px solid rgba(92, 64, 51, 0.12);
+  background:
+    linear-gradient(120deg, rgba(250, 246, 239, 0.92), rgba(255, 255, 255, 0.92)),
+    radial-gradient(700px 400px at 15% 20%, rgba(232, 106, 51, 0.18), transparent 60%);
+  box-shadow: var(--mess-shadow);
+}
+
+.hero-mess .hero-img {
+  max-height: 360px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* Site footer — compact SaaS style */
+footer.mess-footer {
+  background: #111827;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+footer.mess-footer .mess-footer-desc {
+  color: #9ca3af;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+footer.mess-footer .mess-footer-links a {
+  transition: color 150ms ease;
+}
+
+footer.mess-footer .mess-footer-links a:hover {
+  color: #f9fafb !important;
+}
+
+/* Badges tweak */
+.bg-mess-accent {
+  background: linear-gradient(135deg, var(--mess-orange) 0%, var(--mess-ruby)) !important;
+  color: #fff !important;
+}
+
+.btn-mess-primary {
+  border: 0 !important;
+  color: #fff !important;
+  background: linear-gradient(135deg, var(--mess-orange), var(--mess-ruby-dark)) !important;
+  box-shadow: 0 12px 24px rgba(125, 17, 40, 0.18);
+}
+
+.btn-mess-primary:hover {
+  filter: brightness(1.03);
+}
+
+.btn-outline-mess {
+  border-color: rgba(124, 17, 40, 0.35) !important;
+  color: var(--mess-ruby-dark) !important;
+  background-color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.btn-outline-mess:hover {
+  border-color: rgba(232, 106, 51, 0.55) !important;
+  color: var(--mess-ruby-dark) !important;
+  background-color: rgba(232, 106, 51, 0.08) !important;
+}
+
+.unseen-pill {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 999px;
+  background: #dc2626;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Forms */
+.form-control:focus {
+  border-color: rgba(232, 106, 51, 0.55);
+  box-shadow: 0 0 0 0.2rem rgba(232, 106, 51, 0.15);
+}
+
+/* Reduce excessive motion if user prefers */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}

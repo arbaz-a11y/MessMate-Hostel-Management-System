@@ -1,0 +1,53 @@
+<div class="sidebar-mess shadow-sm">
+  <div class="list-group list-group-flush p-3">
+    <div class="px-3 pt-2 pb-3 fw-semibold text-uppercase small text-muted">Mess Desk</div>
+    <a
+      class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'admin_dashboard' %}active{% endif %}"
+      href="{% url 'admin_dashboard' %}"
+    >
+      <i class="bi bi-grid-1x2-fill me-2 text-danger"></i> Dashboard overview
+    </a>
+    <a
+      class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'admin_notifications' %}active{% endif %}"
+      href="{% url 'admin_notifications' %}"
+    >
+      <span class="d-flex align-items-center justify-content-between">
+        <span><i class="bi bi-bell-fill me-2 text-warning"></i> Notifications</span>
+        <span class="d-inline-flex gap-2">
+          {% if unseen_meal_count %}
+            <span class="badge rounded-pill text-bg-danger" title="Unseen meal requests">{{ unseen_meal_count }}</span>
+          {% endif %}
+          {% if unseen_leave_count %}
+            <span class="badge rounded-pill text-bg-danger" title="Unseen leave requests">{{ unseen_leave_count }}</span>
+          {% endif %}
+        </span>
+      </span>
+    </a>
+    <a
+      class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'admin_student_records' or request.resolver_match.url_name == 'admin_student_create' or request.resolver_match.url_name == 'admin_student_detail' or request.resolver_match.url_name == 'admin_student_edit' or request.resolver_match.url_name == 'admin_student_delete' %}active{% endif %}"
+      href="{% url 'admin_student_records' %}"
+    >
+      <i class="bi bi-people-fill me-2 text-secondary"></i> Student management
+    </a>
+
+    <div class="px-3 pt-4 pb-2 small text-muted">Shortcuts</div>
+    <div class="px-3 pb-3 small">
+      <div class="d-flex align-items-center justify-content-between mb-2">
+        <span><i class="bi bi-cup-hot-fill me-1 text-danger"></i> Meal requests</span>
+        {% if unseen_meal_count %}
+          <span class="notif-bubble">{{ unseen_meal_count }}</span>
+        {% else %}
+          <span class="text-muted">—</span>
+        {% endif %}
+      </div>
+      <div class="d-flex align-items-center justify-content-between">
+        <span><i class="bi bi-suitcase-lg me-1 text-warning"></i> Leave requests</span>
+        {% if unseen_leave_count %}
+          <span class="notif-bubble">{{ unseen_leave_count }}</span>
+        {% else %}
+          <span class="text-muted">—</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
