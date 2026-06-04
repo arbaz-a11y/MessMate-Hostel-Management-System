@@ -58,3 +58,4 @@ Open:
 - Duplicate meal absence for the same student/date/meal is blocked at both form and DB levels.
 - Leave validation prevents `from_date > to_date`.
 
+# MessMate-Hostel-Management-System
