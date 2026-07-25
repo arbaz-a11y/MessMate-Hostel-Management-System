@@ -65,4 +65,17 @@ urlpatterns = [
         "admin-panel/leave/<int:pk>/delete/",
         views.admin_delete_leave_request,
     ),
+    # Staff / admin management
+    path("mess-admin/staff/", views.admin_staff_records, name="admin_staff_records"),
+    path("mess-admin/staff/add/", views.admin_staff_create, name="admin_staff_create"),
+    path(
+        "mess-admin/staff/<int:pk>/edit/",
+        views.admin_staff_edit,
+        name="admin_staff_edit",
+    ),
+    path(
+        "mess-admin/staff/<int:pk>/delete/",
+        views.admin_staff_delete,
+        name="admin_staff_delete",
+    ),
 ]

@@ -1,0 +1,81 @@
+{% extends "mess/admin_shell.html" %}
+{% block title %}{{ form_title }} | MessMate{% endblock %}
+
+{% block admin_main %}
+  <div class="mb-4">
+    <a class="btn btn-sm btn-outline-secondary" href="{% url 'admin_staff_records' %}">
+      <i class="bi bi-arrow-left me-1"></i> Back to staff list
+    </a>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <div class="card card-mess">
+        <div class="card-body p-4">
+          <div class="h4 fw-semibold mb-1">{{ form_title }}</div>
+          <p class="text-muted small mb-4">Staff accounts can access the mess admin dashboard and manage students.</p>
+
+          {% if errors %}
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                {% for error in errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
+
+          <form method="post" novalidate>
+            {% csrf_token %}
+
+            <div class="mb-3">
+              <label class="form-label" for="id_full_name">Full name</label>
+              <input class="form-control" type="text" name="full_name" id="id_full_name"
+                     value="{{ form_data.full_name|default:'' }}" maxlength="150" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_username">Username</label>
+              <input class="form-control" type="text" name="username" id="id_username"
+                     value="{{ form_data.username|default:'' }}" maxlength="150" required>
+              <div class="form-text">This will be used to log in to the admin dashboard.</div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_email">Email</label>
+              <input class="form-control" type="email" name="email" id="id_email"
+                     value="{{ form_data.email|default:'' }}" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="id_password">Password</label>
+              <input class="form-control" type="password" name="password" id="id_password"
+                     minlength="8"
+                     {% if editing_user %}placeholder="Leave blank to keep current password"{% endif %}>
+              {% if editing_user %}
+                <div class="form-text">Leave blank to keep the current password.</div>
+              {% else %}
+                <div class="form-text">Minimum 8 characters.</div>
+              {% endif %}
+            </div>
+
+            {% if editing_user %}
+              <div class="mb-4 form-check">
+                <input class="form-check-input" type="checkbox" name="is_active" id="id_is_active"
+                       {% if is_active %}checked{% endif %}>
+                <label class="form-check-label" for="id_is_active">Account active</label>
+              </div>
+            {% else %}
+              <div class="mb-4"></div>
+            {% endif %}
+
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn btn-mess-primary" type="submit">{{ form_submit_label }}</button>
+              <a class="btn btn-outline-secondary" href="{% url 'admin_staff_records' %}">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

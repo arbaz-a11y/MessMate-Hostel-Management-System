@@ -166,6 +166,27 @@ class MealAbsenceForm(forms.ModelForm):
         return cleaned
 
 
+class AdminStaffCreateForm(forms.Form):
+    """Form for admins to create new staff / mess-admin accounts."""
+
+    full_name = forms.CharField(max_length=150, label="Full name")
+    username = forms.CharField(max_length=150, label="Username")
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput, min_length=8)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        _apply_bootstrap_classes(self)
+
+    def clean_username(self) -> str:
+        username = (self.cleaned_data.get("username") or "").strip()
+        if not username:
+            raise ValidationError("Username is required.")
+        if StudentUser.objects.filter(username=username).exists():
+            raise ValidationError("This username is already taken.")
+        return username
+
+
 class LeaveRequestForm(forms.ModelForm):
     class Meta:
         model = LeaveRequest

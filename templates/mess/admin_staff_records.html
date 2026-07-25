@@ -1,0 +1,90 @@
+{% extends "mess/admin_shell.html" %}
+{% block title %}Staff management | MessMate{% endblock %}
+
+{% block admin_main %}
+  <div class="d-flex flex-wrap gap-3 align-items-end justify-content-between mb-4">
+    <div>
+      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
+        <i class="bi bi-shield-lock text-danger"></i> Staff management
+      </div>
+      <div class="text-muted small">Create and manage mess admin / staff accounts.</div>
+    </div>
+    <a class="btn btn-mess-primary" href="{% url 'admin_staff_create' %}">
+      <i class="bi bi-person-plus me-1"></i> Add staff
+    </a>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-sm-6">
+      <div class="card card-mess h-100">
+        <div class="card-body">
+          <div class="text-muted small">Total staff</div>
+          <div class="h3 mb-0">{{ staff_count }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6">
+      <div class="card card-mess h-100">
+        <div class="card-body">
+          <div class="text-muted small">Active staff</div>
+          <div class="h3 mb-0">{{ active_staff_count }}</div>
+          <div class="small text-muted mt-1">Accounts enabled for login</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form method="get" class="row g-2 align-items-center mb-4">
+    <div class="col-12 col-md">
+      <input class="form-control" type="search" name="q" value="{{ q }}" placeholder="Search by name, username, or email">
+    </div>
+    <div class="col-auto d-flex gap-2">
+      <button class="btn btn-mess-primary" type="submit"><i class="bi bi-search me-1"></i> Search</button>
+      <a class="btn btn-outline-secondary" href="{% url 'admin_staff_records' %}">Reset</a>
+    </div>
+  </form>
+
+  <div class="card card-mess">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle table-mess mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in staff_users %}
+              <tr>
+                <td class="fw-semibold">{{ u.first_name|default:"—" }}</td>
+                <td>{{ u.username }}</td>
+                <td class="text-muted">{{ u.email }}</td>
+                <td>
+                  {% if u.is_active %}
+                    <span class="badge text-bg-success">Active</span>
+                  {% else %}
+                    <span class="badge text-bg-secondary">Inactive</span>
+                  {% endif %}
+                </td>
+                <td class="text-end text-nowrap">
+                  <a class="btn btn-sm btn-outline-secondary" href="{% url 'admin_staff_edit' u.pk %}">Edit</a>
+                  <a class="btn btn-sm btn-outline-danger" href="{% url 'admin_staff_delete' u.pk %}">Delete</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="5" class="text-muted py-4 text-center">
+                  No staff accounts found.{% if q %} Try a different search.{% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

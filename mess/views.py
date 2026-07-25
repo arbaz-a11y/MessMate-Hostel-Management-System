@@ -13,6 +13,7 @@ from django.views.decorators.http import require_GET
 
 from .forms import (
     AdminAuthenticationForm,
+    AdminStaffCreateForm,
     AdminStudentCreateForm,
     AdminStudentEditForm,
     LeaveRequestForm,
@@ -656,3 +657,167 @@ def admin_delete_leave_request(request, pk: int):
     else:
         messages.error(request, "Invalid request.")
     return redirect("admin_dashboard")
+
+
+# ---------------------------------------------------------------------------
+# Staff / Admin management
+# ---------------------------------------------------------------------------
+
+def _staff_management_stats() -> dict[str, int]:
+    total = StudentUser.objects.filter(is_staff=True).count()
+    active = StudentUser.objects.filter(is_staff=True, is_active=True).count()
+    return {
+        "staff_count": total,
+        "active_staff_count": active,
+    }
+
+
+def _staff_user_search(queryset, q: str):
+    if not q:
+        return queryset
+    return queryset.filter(
+        Q(username__icontains=q)
+        | Q(first_name__icontains=q)
+        | Q(email__icontains=q)
+    )
+
+
+@user_passes_test(lambda u: u.is_staff)
+def admin_staff_records(request):
+    q = (request.GET.get("q") or "").strip()
+    staff_users = StudentUser.objects.filter(is_staff=True).order_by("username")
+    staff_users = _staff_user_search(staff_users, q)
+
+    return render(
+        request,
+        "mess/admin_staff_records.html",
+        {
+            "staff_users": staff_users,
+            "q": q,
+            **_staff_management_stats(),
+        },
+    )
+
+
+@user_passes_test(lambda u: u.is_staff)
+def admin_staff_create(request):
+    if request.method == "POST":
+        form = AdminStaffCreateForm(request.POST)
+        if form.is_valid():
+            user = StudentUser.objects.create_user(
+                username=form.cleaned_data["username"],
+                email=form.cleaned_data["email"],
+                password=form.cleaned_data["password"],
+                first_name=form.cleaned_data["full_name"],
+                is_staff=True,
+            )
+            messages.success(
+                request,
+                f"Staff account created for {user.first_name} ({user.username}).",
+            )
+            return redirect("admin_staff_records")
+    else:
+        form = AdminStaffCreateForm()
+
+    return render(
+        request,
+        "mess/admin_staff_form.html",
+        {
+            "form": form,
+            "form_title": "Add staff member",
+            "form_submit_label": "Create staff account",
+            **_staff_management_stats(),
+        },
+    )
+
+
+@user_passes_test(lambda u: u.is_staff)
+def admin_staff_edit(request, pk: int):
+    staff_user = get_object_or_404(StudentUser, pk=pk, is_staff=True)
+
+    if request.method == "POST":
+        full_name = (request.POST.get("full_name") or "").strip()
+        username = (request.POST.get("username") or "").strip()
+        email = (request.POST.get("email") or "").strip()
+        password = request.POST.get("password") or ""
+        is_active = request.POST.get("is_active") == "on"
+
+        errors: list[str] = []
+        if not full_name:
+            errors.append("Full name is required.")
+        if not username:
+            errors.append("Username is required.")
+        elif (
+            StudentUser.objects.filter(username=username).exclude(pk=staff_user.pk).exists()
+        ):
+            errors.append("This username is already taken.")
+        if not email:
+            errors.append("Email is required.")
+
+        if errors:
+            return render(
+                request,
+                "mess/admin_staff_form.html",
+                {
+                    "form_data": request.POST,
+                    "errors": errors,
+                    "form_title": "Edit staff member",
+                    "form_submit_label": "Save changes",
+                    "editing_user": staff_user,
+                    **_staff_management_stats(),
+                },
+            )
+
+        staff_user.username = username
+        staff_user.email = email
+        staff_user.first_name = full_name
+        staff_user.is_active = is_active
+        if password:
+            staff_user.set_password(password)
+        staff_user.save()
+
+        messages.success(request, "Staff account updated.")
+        return redirect("admin_staff_records")
+
+    return render(
+        request,
+        "mess/admin_staff_form.html",
+        {
+            "form_data": {
+                "full_name": staff_user.first_name,
+                "username": staff_user.username,
+                "email": staff_user.email,
+            },
+            "is_active": staff_user.is_active,
+            "errors": [],
+            "form_title": "Edit staff member",
+            "form_submit_label": "Save changes",
+            "editing_user": staff_user,
+            **_staff_management_stats(),
+        },
+    )
+
+
+@user_passes_test(lambda u: u.is_staff)
+def admin_staff_delete(request, pk: int):
+    staff_user = get_object_or_404(StudentUser, pk=pk, is_staff=True)
+
+    # Prevent admins from deleting themselves
+    if staff_user.pk == request.user.pk:
+        messages.error(request, "You cannot delete your own account.")
+        return redirect("admin_staff_records")
+
+    if request.method == "POST":
+        label = f"{staff_user.first_name or staff_user.username} ({staff_user.username})"
+        staff_user.delete()
+        messages.success(request, f"Deleted staff account for {label}.")
+        return redirect("admin_staff_records")
+
+    return render(
+        request,
+        "mess/admin_staff_confirm_delete.html",
+        {
+            "staff_user": staff_user,
+            **_staff_management_stats(),
+        },
+    )
