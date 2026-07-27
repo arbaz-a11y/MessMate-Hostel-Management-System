@@ -4,10 +4,10 @@
 {% block admin_main %}
   <div class="d-flex flex-wrap gap-3 align-items-end justify-content-between mb-4">
     <div>
-      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
-        <i class="bi bi-people-fill text-danger"></i> Student management
+      <div class="h3 fw-bold mb-1 d-flex align-items-center gap-2" style="color: var(--mess-on-surface);">
+        <i class="bi bi-people-fill" style="color: var(--mess-error);"></i> Student management
       </div>
-      <div class="text-muted small">Create and maintain student accounts for the hostel mess.</div>
+      <div class="small" style="color: var(--mess-on-surface-variant);">Create and maintain student accounts for the hostel mess.</div>
     </div>
     <a class="btn btn-mess-primary" href="{% url 'admin_student_create' %}">
       <i class="bi bi-person-plus me-1"></i> Add student
@@ -16,20 +16,16 @@
 
   <div class="row g-3 mb-4">
     <div class="col-12 col-sm-6">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Total students</div>
-          <div class="h3 mb-0">{{ students_count }}</div>
-        </div>
+      <div class="card-stat">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Total students</div>
+        <div class="h3 fw-bold mb-0" style="color: var(--mess-on-surface);">{{ students_count }}</div>
       </div>
     </div>
     <div class="col-12 col-sm-6">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Active students</div>
-          <div class="h3 mb-0">{{ active_students_count }}</div>
-          <div class="small text-muted mt-1">Accounts enabled for login</div>
-        </div>
+      <div class="card-stat">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Active students</div>
+        <div class="h3 fw-bold mb-0" style="color: var(--mess-on-surface);">{{ active_students_count }}</div>
+        <div class="small" style="color: var(--mess-on-surface-variant);">Accounts enabled for login</div>
       </div>
     </div>
   </div>
@@ -44,7 +40,7 @@
     </div>
   </form>
 
-  <div class="card card-mess">
+  <div class="card-mess">
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-hover align-middle table-mess mb-0">
@@ -60,7 +56,7 @@
           <tbody>
             {% for s in students %}
               <tr>
-                <td class="fw-semibold">{{ s.full_name }}</td>
+                <td class="fw-semibold" style="color: var(--mess-on-surface);">{{ s.full_name }}</td>
                 <td>{{ s.usn }}</td>
                 <td class="text-muted">{{ s.email }}</td>
                 <td>
@@ -77,7 +73,7 @@
               </tr>
             {% empty %}
               <tr>
-                <td colspan="5" class="text-muted py-4 text-center">
+                <td colspan="5" class="py-4 text-center" style="color: var(--mess-on-surface-variant);">
                   No students found.{% if q %} Try a different search.{% else %} Add your first student to get started.{% endif %}
                 </td>
               </tr>

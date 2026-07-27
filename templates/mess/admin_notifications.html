@@ -1,32 +1,30 @@
 {% extends "mess/admin_shell.html" %}
-{% block title %}Notifications inbox | MessMate{% endblock %}
+{% block title %}Notifications | MessMate{% endblock %}
 
 {% block admin_main %}
   <div class="d-flex flex-wrap gap-3 align-items-start justify-content-between mb-4">
     <div>
-      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
-        <i class="bi bi-bell-fill text-warning"></i> Notifications inbox
+      <div class="h3 fw-bold mb-1 d-flex align-items-center gap-2" style="color: var(--mess-on-surface);">
+        <i class="bi bi-bell-fill" style="color: var(--mess-tertiary-container);"></i> Notifications inbox
       </div>
-      <div class="text-muted small">
-        We mark submissions as seen when you load this inbox so badges reset — just like clearing app notifications.
+      <div class="small" style="color: var(--mess-on-surface-variant);">
+        Submissions are marked as seen when you load this inbox — badges reset automatically.
       </div>
     </div>
 
     {% if cleared_meal_count or cleared_leave_count %}
-      <div class="badge text-bg-secondary">
-        Cleared markers
-        {% if cleared_meal_count %}· meals {{ cleared_meal_count }}{% endif %}
-        {% if cleared_leave_count %}· leaves {{ cleared_leave_count }}{% endif %}
-      </div>
+      <span class="text-bg-secondary badge">
+        Cleared: {% if cleared_meal_count %}{{ cleared_meal_count }} meal{% endif %}{% if cleared_meal_count and cleared_leave_count %} · {% endif %}{% if cleared_leave_count %}{{ cleared_leave_count }} leave{% endif %}
+      </span>
     {% endif %}
   </div>
 
   <div class="row g-4">
     <div class="col-12">
-      <div class="card card-mess mb-4">
+      <div class="card-mess mb-4">
         <div class="card-body">
-          <div class="fw-semibold mb-3 d-flex justify-content-between align-items-center gap-3">
-            <span><i class="bi bi-cup-hot-fill me-2 text-danger"></i>Recently unseen meal submissions</span>
+          <div class="fw-semibold mb-3 d-flex justify-content-between align-items-center gap-3" style="color: var(--mess-on-surface);">
+            <span><i class="bi bi-cup-hot-fill me-2" style="color: var(--mess-error);"></i>Recently unseen meal submissions</span>
           </div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
@@ -49,7 +47,7 @@
                     <td class="text-muted">{% if m.reason %}{{ m.reason }}{% else %}—{% endif %}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="5" class="text-muted">No unseen meal submissions when you arrived — nice inbox hygiene.</td></tr>
+                  <tr><td colspan="5" style="color: var(--mess-on-surface-variant);">No unseen meal submissions — nice inbox hygiene.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -59,9 +57,9 @@
     </div>
 
     <div class="col-12">
-      <div class="card card-mess">
+      <div class="card-mess">
         <div class="card-body">
-          <div class="fw-semibold mb-3"><i class="bi bi-suitcase-lg me-2 text-warning"></i>Recently unseen leave submissions</div>
+          <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-suitcase-lg me-2" style="color: var(--mess-tertiary-container);"></i>Recently unseen leave submissions</div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -81,7 +79,7 @@
                     <td class="text-muted">{% if l.reason %}{{ l.reason }}{% else %}—{% endif %}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="4" class="text-muted">No unseen leave submissions when you arrived — kitchen is synced.</td></tr>
+                  <tr><td colspan="4" style="color: var(--mess-on-surface-variant);">No unseen leave submissions — kitchen is synced.</td></tr>
                 {% endfor %}
               </tbody>
             </table>

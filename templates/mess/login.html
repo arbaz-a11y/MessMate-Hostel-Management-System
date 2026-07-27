@@ -1,47 +1,71 @@
 {% extends 'base.html' %}
-{% block title %}Student login | MessMate{% endblock %}
+{% load mess_extras %}
+{% block title %}Student Login | MessMate{% endblock %}
 
-{% block content %}
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-5">
-      <div class="card card-mess">
-        <div class="card-body p-4">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="icon-tile fs-4"><i class="bi bi-mortarboard"></i></div>
-            <div>
-              <div class="h4 fw-semibold mb-0">Student login</div>
-              <div class="text-muted small">Use your canonical USN (stored in uppercase).</div>
+{% block layout_columns %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5">
+    <div class="card-mess">
+      <div class="card-body p-4 p-lg-5">
+        <div class="text-center mb-4">
+          <div class="icon-tile mx-auto mb-3" style="width: 3.5rem; height: 3.5rem; font-size: 1.5rem;">
+            <i class="bi bi-mortarboard"></i>
+          </div>
+          <h4 class="fw-bold mb-1" style="color: var(--mess-on-surface);">Student Login</h4>
+          <p class="small" style="color: var(--mess-on-surface-variant);">Sign in with your USN</p>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            {% with level=message.tags|bootstrap_alert_class %}
+              <div class="alert alert-{{ level }} alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi {% if level == 'success' %}bi-check-circle-fill{% elif level == 'danger' %}bi-exclamation-circle-fill{% elif level == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+                  <span>{{ message }}</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+            {% endwith %}
+          {% endfor %}
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>{{ form.non_field_errors }}</span>
+              </div>
             </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
+            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
           </div>
 
-          <form method="post" novalidate>
-            {% csrf_token %}
-
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
-            {% endif %}
-
-            <div class="mb-3">
-              <label class="form-label">USN</label>
-              {{ form.username }}
-              <div class="text-danger small">{{ form.username.errors }}</div>
-            </div>
-            <div class="mb-4">
-              <label class="form-label">Password</label>
-              {{ form.password }}
-              <div class="text-danger small">{{ form.password.errors }}</div>
-            </div>
-
-            <button class="btn btn-mess-primary w-100" type="submit"><i class="bi bi-box-arrow-in-right me-1"></i> Login</button>
-          </form>
-
-          <div class="text-center mt-4 small text-muted">
-            Accounts are issued by your hostel administrator.
-            Staff?
-            <a href="{% url 'admin_login' %}" class="fw-semibold">Mess admin login</a>
+          <div class="mb-4">
+            <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            <div class="text-danger small mt-1">{{ form.password.errors }}</div>
           </div>
+
+          <button class="btn btn-mess-primary w-100 py-2" type="submit">
+            <i class="bi bi-box-arrow-in-right me-1"></i> Sign in
+          </button>
+        </form>
+
+        <div class="text-center mt-4">
+          <p class="text-muted small mb-0">
+            <i class="bi bi-shield-lock me-1"></i> For mess staff?
+            <a href="{% url 'admin_login' %}" style="color: var(--mess-primary); font-weight: 500;">Admin login</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

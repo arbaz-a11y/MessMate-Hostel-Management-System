@@ -7,8 +7,8 @@
       <a class="btn btn-sm btn-outline-secondary mb-2" href="{% url 'admin_student_records' %}">
         <i class="bi bi-arrow-left me-1"></i> All students
       </a>
-      <div class="h3 fw-semibold mb-1">{{ profile.full_name }}</div>
-      <div class="text-muted small">Student profile · {{ profile.usn }}</div>
+      <div class="h3 fw-bold mb-1" style="color: var(--mess-on-surface);">{{ profile.full_name }}</div>
+      <div class="small" style="color: var(--mess-on-surface-variant);">Student profile · {{ profile.usn }}</div>
     </div>
     <div class="d-flex flex-wrap gap-2">
       <a class="btn btn-outline-mess" href="{% url 'admin_student_edit' profile.pk %}"><i class="bi bi-pencil me-1"></i> Edit</a>
@@ -18,21 +18,21 @@
 
   <div class="row g-4 mb-4">
     <div class="col-12 col-lg-5">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
-          <div class="fw-semibold mb-3"><i class="bi bi-person-vcard me-2"></i> Details</div>
+          <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-person-vcard me-2"></i> Details</div>
           <dl class="row mb-0 small">
-            <dt class="col-sm-4 text-muted">Full name</dt>
-            <dd class="col-sm-8">{{ profile.full_name }}</dd>
-            <dt class="col-sm-4 text-muted">USN</dt>
-            <dd class="col-sm-8 fw-semibold">{{ profile.usn }}</dd>
-            <dt class="col-sm-4 text-muted">Email</dt>
-            <dd class="col-sm-8">{{ profile.email }}</dd>
-            <dt class="col-sm-4 text-muted">Room</dt>
-            <dd class="col-sm-8">{{ profile.room_number }}</dd>
-            <dt class="col-sm-4 text-muted">Date joined</dt>
-            <dd class="col-sm-8">{{ profile.user.date_joined|date:"M j, Y" }}</dd>
-            <dt class="col-sm-4 text-muted">Status</dt>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">Full name</dt>
+            <dd class="col-sm-8" style="color: var(--mess-on-surface);">{{ profile.full_name }}</dd>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">USN</dt>
+            <dd class="col-sm-8 fw-semibold" style="color: var(--mess-on-surface);">{{ profile.usn }}</dd>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">Email</dt>
+            <dd class="col-sm-8" style="color: var(--mess-on-surface);">{{ profile.email }}</dd>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">Room</dt>
+            <dd class="col-sm-8" style="color: var(--mess-on-surface);">{{ profile.room_number }}</dd>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">Date joined</dt>
+            <dd class="col-sm-8" style="color: var(--mess-on-surface);">{{ profile.user.date_joined|date:"M j, Y" }}</dd>
+            <dt class="col-sm-4" style="color: var(--mess-on-surface-variant);">Status</dt>
             <dd class="col-sm-8">
               {% if profile.user.is_active %}
                 <span class="badge text-bg-success">Active</span>
@@ -47,20 +47,20 @@
     <div class="col-12 col-lg-7">
       <div class="row g-3">
         <div class="col-6">
-          <div class="card card-mess h-100">
+          <div class="card-mess h-100">
             <div class="card-body">
-              <div class="text-muted small">Meal absences</div>
-              <div class="h4 mb-0">{{ meal_absences|length }}{% if meal_absences|length == 50 %}+{% endif %}</div>
-              <div class="small text-muted">Recent records shown</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">Meal absences</div>
+              <div class="h4 fw-bold mb-0" style="color: var(--mess-on-surface);">{{ meal_absences|length }}{% if meal_absences|length == 50 %}+{% endif %}</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">Recent records shown</div>
             </div>
           </div>
         </div>
         <div class="col-6">
-          <div class="card card-mess h-100">
+          <div class="card-mess h-100">
             <div class="card-body">
-              <div class="text-muted small">Leave requests</div>
-              <div class="h4 mb-0">{{ leave_requests|length }}{% if leave_requests|length == 50 %}+{% endif %}</div>
-              <div class="small text-muted">Recent records shown</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">Leave requests</div>
+              <div class="h4 fw-bold mb-0" style="color: var(--mess-on-surface);">{{ leave_requests|length }}{% if leave_requests|length == 50 %}+{% endif %}</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">Recent records shown</div>
             </div>
           </div>
         </div>
@@ -70,9 +70,9 @@
 
   <div class="row g-4">
     <div class="col-12 col-xl-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
-          <div class="fw-semibold mb-3"><i class="bi bi-cup-hot me-2 text-danger"></i> Meal absence history</div>
+          <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-cup-hot me-2" style="color: var(--mess-error);"></i> Meal absence history</div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -90,7 +90,7 @@
                     <td class="text-muted">{{ a.created_at|date:"M j, Y" }}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="3" class="text-muted">No meal absence records.</td></tr>
+                  <tr><td colspan="3" style="color: var(--mess-on-surface-variant);">No meal absence records.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -100,9 +100,9 @@
     </div>
 
     <div class="col-12 col-xl-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
-          <div class="fw-semibold mb-3"><i class="bi bi-suitcase-lg me-2 text-warning"></i> Leave request history</div>
+          <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-suitcase-lg me-2" style="color: var(--mess-tertiary-container);"></i> Leave request history</div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -120,7 +120,7 @@
                     <td class="text-muted">{{ l.created_at|date:"M j, Y" }}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="3" class="text-muted">No leave requests.</td></tr>
+                  <tr><td colspan="3" style="color: var(--mess-on-surface-variant);">No leave requests.</td></tr>
                 {% endfor %}
               </tbody>
             </table>

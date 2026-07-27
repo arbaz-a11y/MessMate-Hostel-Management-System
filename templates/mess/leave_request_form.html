@@ -1,31 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Leave request | MessMate{% endblock %}
+{% block title %}Leave Request | MessMate{% endblock %}
 
 {% block content %}
-  <div class="card card-mess">
+  <div class="card-mess">
     <div class="card-body p-4">
       <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div>
-          <div class="h4 fw-semibold mb-1 d-flex align-items-center gap-2">
+          <div class="h4 fw-bold mb-1 d-flex align-items-center gap-2" style="color: var(--mess-on-surface);">
             <i class="bi bi-airplane text-secondary"></i> Multi-day leave
           </div>
-          <div class="text-muted small">
+          <div class="small" style="color: var(--mess-on-surface-variant);">
             Applies to breakfast, lunch, and dinner throughout the inclusive date range.
           </div>
         </div>
         <a class="btn btn-outline-mess btn-sm" href="{% url 'request_history' %}"><i class="bi bi-clock-history me-1"></i> History</a>
       </div>
 
-      <div class="alert alert-warning small">
-        <i class="bi bi-info-circle me-1"></i>
-        This leave means you will be absent for <span class="fw-semibold">all meals</span> between the selected dates.
+      <div class="alert alert-warning small d-flex align-items-center gap-2">
+        <i class="bi bi-info-circle"></i>
+        <span>This leave means you will be absent for <span class="fw-semibold">all meals</span> between the selected dates.</span>
       </div>
 
       <form method="post" novalidate>
         {% csrf_token %}
 
         {% if form.non_field_errors %}
-          <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+          <div class="alert alert-danger">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-exclamation-circle-fill"></i>
+              <span>{{ form.non_field_errors }}</span>
+            </div>
+          </div>
         {% endif %}
 
         <div class="row g-3">

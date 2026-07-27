@@ -1,51 +1,71 @@
-{% extends "base.html" %}
-{% block title %}Mess admin login | MessMate{% endblock %}
+{% extends 'base.html' %}
+{% load mess_extras %}
+{% block title %}Admin Login | MessMate{% endblock %}
 
-{% block content %}
-  <div class="row justify-content-center">
-    <div class="col-12 col-md-8 col-lg-5">
-      <div class="card card-mess">
-        <div class="card-body p-4">
-          <div class="d-flex justify-content-between align-items-start mb-3">
-            <div>
-              <div class="h4 fw-semibold mb-1 d-flex align-items-center gap-2">
-                <i class="bi bi-shield-lock text-danger"></i> Mess admin login
+{% block layout_columns %}
+<div class="row justify-content-center">
+  <div class="col-12 col-md-6 col-lg-5">
+    <div class="card-mess border" style="border-color: rgba(79,55,138,0.15) !important;">
+      <div class="card-body p-4 p-lg-5">
+        <div class="text-center mb-4">
+          <div class="icon-tile mx-auto mb-3" style="width: 3.5rem; height: 3.5rem; font-size: 1.5rem; background-color: color-mix(in srgb, var(--mess-primary) 12%, transparent);">
+            <i class="bi bi-shield-lock"></i>
+          </div>
+          <h4 class="fw-bold mb-1" style="color: var(--mess-on-surface);">Admin Login</h4>
+          <p class="small" style="color: var(--mess-on-surface-variant);">Staff access only</p>
+        </div>
+
+        {% if messages %}
+          {% for message in messages %}
+            {% with level=message.tags|bootstrap_alert_class %}
+              <div class="alert alert-{{ level }} alert-dismissible fade show" role="alert">
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi {% if level == 'danger' %}bi-shield-exclamation{% else %}bi-info-circle-fill{% endif %}"></i>
+                  <span>{{ message }}</span>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
-              <div class="text-muted small">
-                Dedicated entry for hostel staff dashboards at <span class="fw-semibold text-body">/mess-admin/</span>
+            {% endwith %}
+          {% endfor %}
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+              <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>Invalid username or password.</span>
               </div>
             </div>
+          {% endif %}
+
+          <div class="mb-3">
+            <label class="form-label" for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
+            <div class="text-danger small mt-1">{{ form.username.errors }}</div>
           </div>
 
-          <form method="post" novalidate>
-            {% csrf_token %}
-
-            {% if form.non_field_errors %}
-              <div class="alert alert-danger">{{ form.non_field_errors }}</div>
-            {% endif %}
-
-            <div class="mb-3">
-              <label class="form-label">Username</label>
-              {{ form.username }}
-              <div class="text-danger small">{{ form.username.errors }}</div>
-            </div>
-            <div class="mb-4">
-              <label class="form-label">Password</label>
-              {{ form.password }}
-              <div class="text-danger small">{{ form.password.errors }}</div>
-            </div>
-
-            <button class="btn btn-mess-primary w-100" type="submit"><i class="bi bi-door-open me-1"></i> Sign in</button>
-          </form>
-
-          <hr class="my-4">
-
-          <div class="d-grid gap-2">
-            <a class="btn btn-outline-mess w-100" href="{% url 'login' %}"><i class="bi bi-mortarboard me-1"></i> Go to Student login</a>
-            <a class="btn btn-outline-secondary w-100" href="{% url 'home' %}"><i class="bi bi-arrow-left me-1"></i> Back to home</a>
+          <div class="mb-4">
+            <label class="form-label" for="{{ form.password.id_for_label }}">Password</label>
+            {{ form.password }}
+            <div class="text-danger small mt-1">{{ form.password.errors }}</div>
           </div>
+
+          <button class="btn btn-mess-primary w-100 py-2" type="submit">
+            <i class="bi bi-shield-lock me-1"></i> Sign in as admin
+          </button>
+        </form>
+
+        <div class="text-center mt-4">
+          <p class="text-muted small mb-0">
+            <i class="bi bi-mortarboard me-1"></i> Student login?
+            <a href="{% url 'login' %}" style="color: var(--mess-primary); font-weight: 500;">Student login</a>
+          </p>
         </div>
       </div>
     </div>
   </div>
+</div>
 {% endblock %}

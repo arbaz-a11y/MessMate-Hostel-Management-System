@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Request history | MessMate{% endblock %}
+{% block title %}Request History | MessMate{% endblock %}
 
 {% block content %}
   <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between mb-4">
     <div>
-      <div class="h4 fw-semibold mb-1 d-flex align-items-center gap-2">
-        <i class="bi bi-journal-text text-danger"></i> Request history
+      <div class="h4 fw-bold mb-1 d-flex align-items-center gap-2" style="color: var(--mess-on-surface);">
+        <i class="bi bi-journal-text" style="color: var(--mess-error);"></i> Request history
       </div>
-      <div class="text-muted small">Cancellations are only allowed for upcoming windows.</div>
+      <div class="small" style="color: var(--mess-on-surface-variant);">Cancellations are only allowed for upcoming windows.</div>
     </div>
     <div class="d-flex flex-wrap gap-2">
       <a class="btn btn-mess-primary" href="{% url 'meal_absence_create' %}"><i class="bi bi-plus-lg me-1"></i> Meal absence</a>
@@ -15,9 +15,9 @@
     </div>
   </div>
 
-  <div class="card card-mess mb-4">
+  <div class="card-mess mb-4">
     <div class="card-body">
-      <div class="fw-semibold mb-3"><i class="bi bi-cup-hot me-2 text-warning"></i> Meal absence requests</div>
+      <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-cup-hot me-2" style="color: var(--mess-tertiary-container);"></i> Meal absence requests</div>
       <div class="table-responsive">
         <table class="table table-sm align-middle table-mess mb-0">
           <thead>
@@ -46,7 +46,7 @@
                 </td>
               </tr>
             {% empty %}
-              <tr><td colspan="4" class="text-muted">No meal absence requests yet.</td></tr>
+              <tr><td colspan="4" style="color: var(--mess-on-surface-variant);">No meal absence requests yet.</td></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -54,9 +54,9 @@
     </div>
   </div>
 
-  <div class="card card-mess">
+  <div class="card-mess">
     <div class="card-body">
-      <div class="fw-semibold mb-3"><i class="bi bi-suitcase-lg me-2 text-secondary"></i> Leave requests</div>
+      <div class="fw-semibold mb-3" style="color: var(--mess-on-surface);"><i class="bi bi-suitcase-lg me-2 text-secondary"></i> Leave requests</div>
       <div class="table-responsive">
         <table class="table table-sm align-middle table-mess mb-0">
           <thead>
@@ -85,7 +85,7 @@
                 </td>
               </tr>
             {% empty %}
-              <tr><td colspan="4" class="text-muted">No leave requests yet.</td></tr>
+              <tr><td colspan="4" style="color: var(--mess-on-surface-variant);">No leave requests yet.</td></tr>
             {% endfor %}
           </tbody>
         </table>

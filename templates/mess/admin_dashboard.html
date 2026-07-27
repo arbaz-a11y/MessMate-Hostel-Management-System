@@ -4,13 +4,12 @@
 {% block admin_main %}
   <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between mb-4">
     <div>
-      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
-        <i class="bi bi-cup-hot-fill text-danger"></i>
+      <div class="h3 fw-bold mb-1 d-flex align-items-center gap-2" style="color: var(--mess-on-surface);">
+        <i class="bi bi-cup-hot-fill" style="color: var(--mess-error);"></i>
         Mess operations desk
       </div>
-      <div class="text-muted small">
-        Today in the kitchen timezone: <span class="fw-semibold text-body">{{ today }}</span>
-        · Showing live analytics for staff
+      <div class="small" style="color: var(--mess-on-surface-variant);">
+        Today: <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ today }}</span>
       </div>
     </div>
     <div class="d-flex flex-wrap gap-2">
@@ -32,18 +31,16 @@
     </div>
   </div>
 
-  <form class="row g-2 mb-4 p-3 rounded-4 border" style="border-color: rgba(92,64,51,0.12) !important; background: rgba(255,255,255,0.75);">
+  <!-- Filter form -->
+  <form class="filter-bar row g-2 mb-4 p-3">
     <div class="col-12 col-md-3">
-      <label class="form-label small text-muted mb-1">Lens date (optional)</label>
+      <label class="form-label small mb-1" style="color: var(--mess-on-surface-variant);">Lens date (optional)</label>
       <input class="form-control" type="date" name="date" value="{% if explicit_date_requested %}{{ filter_date|date:'Y-m-d' }}{% endif %}">
-      <div class="form-text">
-        Leave empty to scan the latest submissions across dates. Set a date to focus the recent panels and schedule tables together.
-        Operational day tables default to <span class="fw-semibold">today</span> when this is empty.
-      </div>
+      <div class="form-text">Leave empty to scan latest submissions across all dates.</div>
     </div>
     <div class="col-12 col-md-6">
-      <label class="form-label small text-muted mb-1">Search students (name / USN / email)</label>
-      <input class="form-control" type="text" name="q" value="{{ q }}" placeholder="Try 2AB… or a student name">
+      <label class="form-label small mb-1" style="color: var(--mess-on-surface-variant);">Search students (name / USN / email)</label>
+      <input class="form-control" type="text" name="q" value="{{ q }}" placeholder="e.g. 2AB... or a name">
     </div>
     <div class="col-12 col-md-3 d-flex align-items-end gap-2">
       <button class="btn btn-mess-primary w-100" type="submit"><i class="bi bi-search me-1"></i> Apply</button>
@@ -51,88 +48,64 @@
     </div>
   </form>
 
+  <!-- Stats row -->
   <div class="row g-3 mb-4">
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Total students</div>
-          <div class="h3 mb-0">{{ students_count }}</div>
-        </div>
+    <div class="col-6 col-md-4 col-xl">
+      <div class="card-stat text-center">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Total students</div>
+        <div class="h3 fw-bold mb-0 mt-1" style="color: var(--mess-on-surface);">{{ students_count }}</div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Breakfast absentees (today)</div>
-          <div class="h3 mb-0">{{ absent_breakfast_count }}</div>
-        </div>
+    <div class="col-6 col-md-4 col-xl">
+      <div class="card-stat text-center">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Breakfast absent</div>
+        <div class="h3 fw-bold mb-0 mt-1" style="color: var(--mess-error);">{{ absent_breakfast_count }}</div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Lunch absentees (today)</div>
-          <div class="h3 mb-0">{{ absent_lunch_count }}</div>
-        </div>
+    <div class="col-6 col-md-4 col-xl">
+      <div class="card-stat text-center">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Lunch absent</div>
+        <div class="h3 fw-bold mb-0 mt-1" style="color: var(--mess-tertiary-container);">{{ absent_lunch_count }}</div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Dinner absentees (today)</div>
-          <div class="h3 mb-0">{{ absent_dinner_count }}</div>
-        </div>
+    <div class="col-6 col-md-4 col-xl">
+      <div class="card-stat text-center">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Dinner absent</div>
+        <div class="h3 fw-bold mb-0 mt-1" style="color: var(--mess-on-surface);">{{ absent_dinner_count }}</div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="text-muted small">Active leave requests</div>
-          <div class="h3 mb-0">{{ active_leave_requests }}</div>
-          <div class="small text-muted mt-1">From today onwards</div>
-        </div>
+    <div class="col-6 col-md-4 col-xl">
+      <div class="card-stat text-center">
+        <div class="small" style="color: var(--mess-on-surface-variant);">Active leaves</div>
+        <div class="h3 fw-bold mb-0 mt-1" style="color: var(--mess-on-surface);">{{ active_leave_requests }}</div>
       </div>
     </div>
-    <div class="col-12 col-md-6 col-xl">
-      <div class="card card-mess h-100">
-        <div class="card-body d-flex flex-column">
-          <div class="text-muted small">Student management</div>
-          <div class="h5 fw-semibold mb-2">Accounts &amp; roster</div>
-          <p class="small text-muted mb-3 flex-grow-1">Add students, search profiles, and review meal and leave history.</p>
-          <a class="btn btn-sm btn-outline-mess align-self-start" href="{% url 'admin_student_records' %}">
-            <i class="bi bi-people-fill me-1"></i> Open student management
-          </a>
+    <div class="col-12 col-md-12 col-xl">
+      <div class="card-stat d-flex align-items-center justify-content-between">
+        <div>
+          <div class="small" style="color: var(--mess-on-surface-variant);">Flagged meal slots</div>
+          <div class="display-6 fw-bold lh-1" style="color: var(--mess-primary);">{{ estimated_meal_reduction_today }}</div>
         </div>
-      </div>
-    </div>
-    <div class="col-12">
-      <div class="card card-mess">
-        <div class="card-body d-flex flex-wrap gap-3 justify-content-between align-items-center">
-          <div>
-            <div class="fw-semibold mb-1"><i class="bi bi-calculator me-2 text-warning"></i> Today's meal reduction snapshot</div>
-            <div class="text-muted small">Sum of breakfast + lunch + dinner absent counts for today (students can be counted across meals).</div>
-          </div>
-          <div class="text-end">
-            <div class="text-muted small">Total flagged meal slots</div>
-            <div class="display-6 fw-semibold lh-1">{{ estimated_meal_reduction_today }}</div>
-          </div>
+        <div class="icon-tile" style="background-color: color-mix(in srgb, var(--mess-primary) 10%, transparent);">
+          <i class="bi bi-calculator"></i>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Recent submissions tables -->
   <div class="row g-4 mb-4">
     <div class="col-12 col-xl-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between mb-2">
             <div>
-              <div class="fw-semibold">Recent meal absence submissions</div>
-              <div class="text-muted small">
+              <div class="fw-semibold" style="color: var(--mess-on-surface);">Recent meal absences</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">
                 {% if explicit_date_requested %}
-                  Filtered to meal day <span class="fw-semibold text-body">{{ filter_date }}</span>
+                  Filtered to meal day <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ filter_date }}</span>
                 {% else %}
-                  Latest submissions across all dates (pick a date above to focus a specific day)
+                  Latest submissions across all dates
                 {% endif %}
               </div>
             </div>
@@ -140,7 +113,6 @@
               <span class="badge text-bg-danger">{{ unseen_meal_count }} unseen</span>
             {% endif %}
           </div>
-
           <div class="table-responsive mt-3">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -174,7 +146,7 @@
                     </td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="6" class="text-muted">No matching meal absence requests.</td></tr>
+                  <tr><td colspan="6" style="color: var(--mess-on-surface-variant);">No matching meal absence requests.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -184,16 +156,16 @@
     </div>
 
     <div class="col-12 col-xl-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
           <div class="d-flex align-items-start justify-content-between mb-2">
             <div>
-              <div class="fw-semibold">Recent leave requests</div>
-              <div class="text-muted small">
+              <div class="fw-semibold" style="color: var(--mess-on-surface);">Recent leave requests</div>
+              <div class="small" style="color: var(--mess-on-surface-variant);">
                 {% if explicit_date_requested %}
-                  Overlaps <span class="fw-semibold text-body">{{ filter_date }}</span>
+                  Overlaps <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ filter_date }}</span>
                 {% else %}
-                  Latest submissions across all dates (pick a date above to focus overlaps)
+                  Latest submissions across all dates
                 {% endif %}
               </div>
             </div>
@@ -201,7 +173,6 @@
               <span class="badge text-bg-danger">{{ unseen_leave_count }} unseen</span>
             {% endif %}
           </div>
-
           <div class="table-responsive mt-3">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -233,7 +204,7 @@
                     </td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="5" class="text-muted">No matching leave requests.</td></tr>
+                  <tr><td colspan="5" style="color: var(--mess-on-surface-variant);">No matching leave requests.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -243,11 +214,12 @@
     </div>
   </div>
 
+  <!-- Day-focused operational tables -->
   <div class="row g-4">
     <div class="col-12">
-      <div class="card card-mess mb-3">
+      <div class="card-mess mb-3">
         <div class="card-body">
-          <div class="fw-semibold mb-2"><i class="bi bi-journal-text me-2"></i> Meal absences scheduled on {{ filter_date }}</div>
+          <div class="fw-semibold mb-2" style="color: var(--mess-on-surface);"><i class="bi bi-journal-text me-2"></i> Meal absences scheduled on {{ filter_date }}</div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -274,7 +246,7 @@
                     </td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="5" class="text-muted">No meal absence rows for this date/filter.</td></tr>
+                  <tr><td colspan="5" style="color: var(--mess-on-surface-variant);">No meal absence rows for this date/filter.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -284,9 +256,9 @@
     </div>
 
     <div class="col-12">
-      <div class="card card-mess">
+      <div class="card-mess">
         <div class="card-body">
-          <div class="fw-semibold mb-2"><i class="bi bi-pin-map me-2"></i> Leave windows covering {{ filter_date }}</div>
+          <div class="fw-semibold mb-2" style="color: var(--mess-on-surface);"><i class="bi bi-pin-map me-2"></i> Leave windows covering {{ filter_date }}</div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
               <thead>
@@ -315,7 +287,7 @@
                     </td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="6" class="text-muted">No leave rows overlapping this date/filter.</td></tr>
+                  <tr><td colspan="6" style="color: var(--mess-on-surface-variant);">No leave rows overlapping this date/filter.</td></tr>
                 {% endfor %}
               </tbody>
             </table>

@@ -4,10 +4,10 @@
 {% block content %}
   <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between mb-4">
     <div>
-      <div class="h3 fw-semibold mb-1 d-flex align-items-center gap-2">
-        <i class="bi bi-emoji-smile text-warning"></i> Welcome back, {{ profile.full_name }}
+      <div class="h3 fw-bold mb-1 d-flex align-items-center gap-2">
+        <i class="bi bi-emoji-smile" style="color: var(--mess-tertiary-container);"></i> Welcome back, {{ profile.full_name }}
       </div>
-      <div class="text-muted small">USN <span class="fw-semibold text-body">{{ profile.usn }}</span> · Room <span class="fw-semibold text-body">{{ profile.room_number }}</span></div>
+      <div class="small" style="color: var(--mess-on-surface-variant);">USN <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ profile.usn }}</span> · Room <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ profile.room_number }}</span></div>
     </div>
     <div class="d-flex flex-wrap gap-2">
       <a class="btn btn-mess-primary" href="{% url 'meal_absence_create' %}"><i class="bi bi-cup-hot me-1"></i> Meal absence</a>
@@ -16,82 +16,88 @@
     </div>
   </div>
 
+  <!-- Today's status -->
   <div class="row g-3 mb-4">
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="text-muted small">Today</div>
-              <div class="h4 mb-0">{{ today }}</div>
-            </div>
-            <div class="icon-tile"><i class="bi bi-calendar-event"></i></div>
+      <div class="card-stat h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Today</div>
+            <div class="h4 mb-0 mt-1 fw-bold" style="color: var(--mess-on-surface);">{{ today }}</div>
           </div>
+          <div class="icon-tile"><i class="bi bi-calendar-event"></i></div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="text-muted small">Breakfast</div>
-              <div class="h5 mb-0 mt-1">
-                {% if absent_breakfast %}<span class="badge text-bg-danger">Absent</span>{% else %}<span class="badge text-bg-success">Present</span>{% endif %}
-              </div>
+      <div class="card-stat h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Breakfast</div>
+            <div class="mt-2">
+              {% if absent_breakfast %}
+                <span class="badge text-bg-danger px-3 py-2">Absent</span>
+              {% else %}
+                <span class="badge text-bg-success px-3 py-2">Present</span>
+              {% endif %}
             </div>
-            <div class="icon-tile"><i class="bi bi-sunrise"></i></div>
           </div>
+          <div class="icon-tile"><i class="bi bi-sunrise"></i></div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="text-muted small">Lunch</div>
-              <div class="h5 mb-0 mt-1">
-                {% if absent_lunch %}<span class="badge text-bg-danger">Absent</span>{% else %}<span class="badge text-bg-success">Present</span>{% endif %}
-              </div>
+      <div class="card-stat h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Lunch</div>
+            <div class="mt-2">
+              {% if absent_lunch %}
+                <span class="badge text-bg-danger px-3 py-2">Absent</span>
+              {% else %}
+                <span class="badge text-bg-success px-3 py-2">Present</span>
+              {% endif %}
             </div>
-            <div class="icon-tile"><i class="bi bi-brightness-high"></i></div>
           </div>
+          <div class="icon-tile"><i class="bi bi-brightness-high"></i></div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="text-muted small">Dinner</div>
-              <div class="h5 mb-0 mt-1">
-                {% if absent_dinner %}<span class="badge text-bg-danger">Absent</span>{% else %}<span class="badge text-bg-success">Present</span>{% endif %}
-              </div>
+      <div class="card-stat h-100">
+        <div class="d-flex justify-content-between align-items-start">
+          <div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Dinner</div>
+            <div class="mt-2">
+              {% if absent_dinner %}
+                <span class="badge text-bg-danger px-3 py-2">Absent</span>
+              {% else %}
+                <span class="badge text-bg-success px-3 py-2">Present</span>
+              {% endif %}
             </div>
-            <div class="icon-tile"><i class="bi bi-moon-stars"></i></div>
           </div>
+          <div class="icon-tile"><i class="bi bi-moon-stars"></i></div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Notifications + Quick actions -->
   <div class="row g-4 mb-2">
     <div class="col-12 col-lg-5">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="fw-semibold"><i class="bi bi-megaphone me-2 text-danger"></i> Notifications</div>
+            <div class="fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-megaphone me-2" style="color: var(--mess-error);"></i> Notifications</div>
           </div>
           {% if dashboard_notifications %}
             <ul class="mb-0">
               {% for note in dashboard_notifications %}
-                <li class="mb-2 text-muted">{{ note }}</li>
+                <li class="mb-2" style="color: var(--mess-on-surface-variant);">{{ note }}</li>
               {% endfor %}
             </ul>
           {% else %}
-            <div class="text-muted">You're all caught up.</div>
+            <div style="color: var(--mess-on-surface-variant);">You're all caught up.</div>
           {% endif %}
         </div>
       </div>
@@ -100,23 +106,23 @@
     <div class="col-12 col-lg-7">
       <div class="row g-3">
         <div class="col-12 col-md-6">
-          <a class="text-decoration-none" href="{% url 'meal_absence_create' %}">
-            <div class="card card-mess h-100">
+          <a class="text-decoration-none quick-action" href="{% url 'meal_absence_create' %}">
+            <div class="card-mess h-100">
               <div class="card-body">
-                <div class="fw-semibold text-body mb-1"><i class="bi bi-cup-hot-fill me-2 text-warning"></i>Quick: Mark absence</div>
-                <div class="text-muted small mb-2">Tell the kitchen about a skipped meal ahead of time.</div>
-                <span class="text-danger small fw-semibold">Tap to submit <i class="bi bi-arrow-right"></i></span>
+                <div class="fw-semibold mb-1" style="color: var(--mess-on-surface);"><i class="bi bi-cup-hot-fill me-2" style="color: var(--mess-tertiary-container);"></i>Mark absence</div>
+                <div class="small mb-2" style="color: var(--mess-on-surface-variant);">Tell the kitchen about a skipped meal ahead of time.</div>
+                <span class="small fw-semibold" style="color: var(--mess-error);">Submit <i class="bi bi-arrow-right"></i></span>
               </div>
             </div>
           </a>
         </div>
         <div class="col-12 col-md-6">
-          <a class="text-decoration-none" href="{% url 'leave_request_create' %}">
-            <div class="card card-mess h-100">
+          <a class="text-decoration-none quick-action" href="{% url 'leave_request_create' %}">
+            <div class="card-mess h-100">
               <div class="card-body">
-                <div class="fw-semibold text-body mb-1"><i class="bi bi-airplane me-2 text-secondary"></i>Quick: Leave plan</div>
-                <div class="text-muted small mb-2">Going home? Save meals across multiple days.</div>
-                <span class="text-danger small fw-semibold">Tap to apply <i class="bi bi-arrow-right"></i></span>
+                <div class="fw-semibold mb-1" style="color: var(--mess-on-surface);"><i class="bi bi-airplane me-2 text-secondary"></i>Leave plan</div>
+                <div class="small mb-2" style="color: var(--mess-on-surface-variant);">Going home? Save meals across multiple days.</div>
+                <span class="small fw-semibold" style="color: var(--mess-error);">Apply <i class="bi bi-arrow-right"></i></span>
               </div>
             </div>
           </a>
@@ -125,13 +131,14 @@
     </div>
   </div>
 
-  <div class="row g-4">
+  <!-- Tables -->
+  <div class="row g-4 mt-2">
     <div class="col-12 col-lg-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="fw-semibold"><i class="bi bi-calendar2-week me-2 text-secondary"></i> Upcoming meal absences</div>
-            <a class="small text-decoration-none" href="{% url 'request_history' %}">History</a>
+            <div class="fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-calendar2-week me-2 text-secondary"></i> Upcoming meal absences</div>
+            <a class="small text-decoration-none" href="{% url 'request_history' %}" style="color: var(--mess-primary);">History</a>
           </div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
@@ -150,7 +157,7 @@
                     <td class="text-muted">{{ a.reason|default:"—" }}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="3" class="text-muted">No upcoming meal absences.</td></tr>
+                  <tr><td colspan="3" style="color: var(--mess-on-surface-variant);">No upcoming meal absences.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -160,11 +167,11 @@
     </div>
 
     <div class="col-12 col-lg-6">
-      <div class="card card-mess h-100">
+      <div class="card-mess h-100">
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="fw-semibold"><i class="bi bi-suitcase-lg me-2 text-warning"></i> Upcoming leaves</div>
-            <a class="small text-decoration-none" href="{% url 'request_history' %}">History</a>
+            <div class="fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-suitcase-lg me-2" style="color: var(--mess-tertiary-container);"></i> Upcoming leaves</div>
+            <a class="small text-decoration-none" href="{% url 'request_history' %}" style="color: var(--mess-primary);">History</a>
           </div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
@@ -183,7 +190,7 @@
                     <td class="text-muted">{{ l.reason|default:"—" }}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="3" class="text-muted">No active leave requests.</td></tr>
+                  <tr><td colspan="3" style="color: var(--mess-on-surface-variant);">No active leave requests.</td></tr>
                 {% endfor %}
               </tbody>
             </table>
@@ -193,11 +200,11 @@
     </div>
 
     <div class="col-12">
-      <div class="card card-mess">
+      <div class="card-mess">
         <div class="card-body">
           <div class="d-flex align-items-center justify-content-between mb-3">
-            <div class="fw-semibold"><i class="bi bi-clock-history me-2 text-secondary"></i> Meal history (recent)</div>
-            <a class="small text-decoration-none" href="{% url 'request_history' %}">Full history</a>
+            <div class="fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-clock-history me-2 text-secondary"></i> Meal history (recent)</div>
+            <a class="small text-decoration-none" href="{% url 'request_history' %}" style="color: var(--mess-primary);">Full history</a>
           </div>
           <div class="table-responsive">
             <table class="table table-sm align-middle table-mess mb-0">
@@ -216,7 +223,7 @@
                     <td class="text-muted">{{ a.reason|default:"—" }}</td>
                   </tr>
                 {% empty %}
-                  <tr><td colspan="3" class="text-muted">No past meal absences yet.</td></tr>
+                  <tr><td colspan="3" style="color: var(--mess-on-surface-variant);">No past meal absences yet.</td></tr>
                 {% endfor %}
               </tbody>
             </table>

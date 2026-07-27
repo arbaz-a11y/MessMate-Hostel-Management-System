@@ -7,15 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}Hostel Mess Management{% endblock %}</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
   </head>
-  <body class="hostel-mess d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-mess sticky-top">
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-mess sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" href="{% url 'home' %}">
-          <i class="bi bi-egg-fried text-warning"></i>
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% url 'home' %}">
+          <i class="bi bi-egg-fried" style="color: var(--mess-tertiary-container);"></i>
           <span>MessMate</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNav" aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +48,12 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link {% if request.resolver_match.url_name == 'admin_student_records' or request.resolver_match.url_name == 'admin_student_create' or request.resolver_match.url_name == 'admin_student_detail' or request.resolver_match.url_name == 'admin_student_edit' %}active{% endif %}" href="{% url 'admin_student_records' %}">
-                  <i class="bi bi-people-fill me-1"></i> Student management
+                  <i class="bi bi-people-fill me-1"></i> Students
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'admin_staff_records' or request.resolver_match.url_name == 'admin_staff_create' or request.resolver_match.url_name == 'admin_staff_edit' %}active{% endif %}" href="{% url 'admin_staff_records' %}">
+                  <i class="bi bi-shield-lock me-1"></i> Staff
                 </a>
               </li>
               <li class="nav-item">
@@ -113,7 +121,10 @@
           {% for message in messages %}
             {% with level=message.tags|bootstrap_alert_class %}
               <div class="alert alert-{{ level }} alert-dismissible fade show shadow-sm" role="alert">
-                {{ message }}
+                <div class="d-flex align-items-center gap-2">
+                  <i class="bi {% if level == 'success' %}bi-check-circle-fill{% elif level == 'danger' %}bi-exclamation-circle-fill{% elif level == 'warning' %}bi-exclamation-triangle-fill{% else %}bi-info-circle-fill{% endif %}"></i>
+                  <span>{{ message }}</span>
+                </div>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
               </div>
             {% endwith %}
@@ -127,12 +138,12 @@
                 {% block sidebar %}
                   <div class="sidebar-mess shadow-sm">
                     <div class="list-group list-group-flush p-3">
-                      <div class="px-3 pt-2 pb-3 fw-semibold text-uppercase small text-muted">Kitchen desk</div>
+                      <div class="px-3 pt-2 pb-3 fw-semibold text-uppercase small" style="color: var(--mess-on-surface-variant);">Kitchen desk</div>
                       <a class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}" href="{% url 'student_dashboard' %}">
-                        <i class="bi bi-speedometer2 me-2 text-danger"></i> Dashboard
+                        <i class="bi bi-speedometer2 me-2" style="color: var(--mess-error);"></i> Dashboard
                       </a>
                       <a class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'meal_absence_create' %}active{% endif %}" href="{% url 'meal_absence_create' %}">
-                        <i class="bi bi-cup-hot me-2 text-warning"></i> Meal absence
+                        <i class="bi bi-cup-hot me-2" style="color: var(--mess-tertiary-container);"></i> Meal absence
                       </a>
                       <a class="list-group-item list-group-item-action {% if request.resolver_match.url_name == 'leave_request_create' %}active{% endif %}" href="{% url 'leave_request_create' %}">
                         <i class="bi bi-suitcase-lg me-2 text-secondary"></i> Leave request
@@ -154,28 +165,28 @@
       </div>
     </main>
 
-    <footer class="mess-footer mt-auto text-secondary" aria-label="Site footer">
+    <footer class="mess-footer mt-auto" aria-label="Site footer">
       <div class="container py-4">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-3 g-lg-4">
           <div class="col">
             <h6 class="text-white fw-semibold small text-uppercase mb-2">MessMate</h6>
-            <p class="small mb-0 lh-sm mess-footer-desc">
+            <p class="small mb-0 lh-sm" style="color: color-mix(in srgb, var(--mess-inverse-on-surface) 60%, transparent);">
               Smart hostel meal management platform designed to reduce food wastage, simplify leave management, and improve hostel dining operations.
             </p>
           </div>
 
           <div class="col">
             <h6 class="text-white fw-semibold small text-uppercase mb-2">Quick Links</h6>
-            <ul class="list-unstyled small mb-0 mess-footer-links">
-              <li class="mb-1"><a class="text-secondary text-decoration-none" href="{% url 'home' %}">Home</a></li>
-              <li class="mb-1"><a class="text-secondary text-decoration-none" href="{% url 'login' %}">Student Login</a></li>
-              <li><a class="text-secondary text-decoration-none" href="{% url 'admin_login' %}">Admin Login</a></li>
+            <ul class="list-unstyled small mb-0">
+              <li class="mb-1"><a class="text-decoration-none" href="{% url 'home' %}">Home</a></li>
+              <li class="mb-1"><a class="text-decoration-none" href="{% url 'login' %}">Student Login</a></li>
+              <li><a class="text-decoration-none" href="{% url 'admin_login' %}">Admin Login</a></li>
             </ul>
           </div>
 
           <div class="col">
             <h6 class="text-white fw-semibold small text-uppercase mb-2">Technologies</h6>
-            <ul class="list-unstyled small mb-0">
+            <ul class="list-unstyled small mb-0" style="color: color-mix(in srgb, var(--mess-inverse-on-surface) 60%, transparent);">
               <li class="mb-1">Django</li>
               <li class="mb-1">Bootstrap 5</li>
               <li class="mb-1">SQLite</li>
@@ -185,17 +196,17 @@
 
           <div class="col">
             <h6 class="text-white fw-semibold small text-uppercase mb-2">Connect</h6>
-            <ul class="list-unstyled small mb-0 mess-footer-links">
-              <li class="mb-1"><a class="text-secondary text-decoration-none" href="https://www.linkedin.com/in/arbazkhazi/">LinkedIn</a></li>
-              <li class="mb-1"><a class="text-secondary text-decoration-none" href="https://github.com/arbaz-a11y">GitHub</a></li>
-              <li><a class="text-secondary text-decoration-none" href="mailto:contact@messmate.example">Email</a></li>
+            <ul class="list-unstyled small mb-0">
+              <li class="mb-1"><a class="text-decoration-none" href="https://www.linkedin.com/in/arbazkhazi/">LinkedIn</a></li>
+              <li class="mb-1"><a class="text-decoration-none" href="https://github.com/arbaz-a11y">GitHub</a></li>
+              <li><a class="text-decoration-none" href="mailto:contact@messmate.example">Email</a></li>
             </ul>
           </div>
         </div>
 
-        <hr class="border-secondary border-opacity-25 my-3">
+        <hr class="my-3" style="border-color: color-mix(in srgb, var(--mess-outline) 25%, transparent);">
 
-        <p class="text-center small text-secondary mb-0 opacity-75">
+        <p class="text-center small mb-0 opacity-75" style="color: color-mix(in srgb, var(--mess-inverse-on-surface) 60%, transparent);">
           &copy; 2026 MessMate &mdash; Smart Hostel Mess Management System
         </p>
       </div>

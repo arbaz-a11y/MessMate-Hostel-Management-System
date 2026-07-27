@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 {% block title %}Home | MessMate{% endblock %}
 
@@ -6,11 +5,11 @@
   <section class="hero-mess mb-5 overflow-hidden">
     <div class="row align-items-center g-0 g-lg-4">
       <div class="col-12 col-lg-6 p-4 p-lg-5">
-        <span class="badge rounded-pill text-bg-danger bg-mess-accent shadow-sm px-3 py-2 mb-3">
+        <span class="badge rounded-pill bg-mess-accent shadow-sm px-3 py-2 mb-3">
           <i class="bi bi-cup-hot-fill me-1"></i> Hostel cafeteria operations
         </span>
-        <h1 class="display-6 fw-semibold lh-sm mb-3">Smart Hostel Mess Management System</h1>
-        <p class="lead text-muted mb-4">
+        <h1 class="display-6 fw-bold lh-sm mb-3" style="color: var(--mess-on-surface);">Smart Hostel Mess Management System</h1>
+        <p class="mb-4" style="color: var(--mess-on-surface-variant); font-size: 1.125rem;">
           Reduce food wastage and manage hostel meal attendance efficiently.
         </p>
         {% if user.is_authenticated and user.is_staff %}
@@ -36,86 +35,85 @@
           alt="Colourful cafeteria-style meal platter"
           loading="lazy"
         >
-        <div class="small text-muted mt-2 px-2">
-          
-        </div>
       </div>
     </div>
   </section>
 
+  <!-- Stats -->
   <section class="row g-4 mb-5">
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100 p-3">
+      <div class="card-stat h-100">
         <div class="d-flex gap-3">
           <div class="icon-tile"><i class="bi bi-people-fill"></i></div>
           <div>
-            <div class="text-muted small">Registered students</div>
-            <div class="display-6 fw-semibold lh-1">{{ stat_students }}</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Registered students</div>
+            <div class="display-6 fw-bold lh-1" style="color: var(--mess-on-surface);">{{ stat_students }}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100 p-3">
+      <div class="card-stat h-100">
         <div class="d-flex gap-3">
           <div class="icon-tile"><i class="bi bi-clock-history"></i></div>
           <div>
-            <div class="text-muted small">Marked absences (today)</div>
-            <div class="display-6 fw-semibold lh-1">{{ stat_meals_marked_absent_today }}</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Marked absences (today)</div>
+            <div class="display-6 fw-bold lh-1" style="color: var(--mess-on-surface);">{{ stat_meals_marked_absent_today }}</div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100 p-3">
+      <div class="card-stat h-100">
         <div class="d-flex gap-3">
           <div class="icon-tile"><i class="bi bi-graph-down"></i></div>
           <div>
-            <div class="text-muted small">Students impacted (today)</div>
-            <div class="display-6 fw-semibold lh-1">{{ stat_students_impacted_today }}</div>
-            <div class="small text-muted">Absences + active leave windows</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Students impacted (today)</div>
+            <div class="display-6 fw-bold lh-1" style="color: var(--mess-on-surface);">{{ stat_students_impacted_today }}</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Absences + active leave windows</div>
           </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-6 col-xl-3">
-      <div class="card card-mess h-100 p-3">
+      <div class="card-stat h-100">
         <div class="d-flex gap-3">
           <div class="icon-tile"><i class="bi bi-shield-check"></i></div>
           <div>
-            <div class="text-muted small">Operations</div>
-            <div class="h5 fw-semibold mb-1">Always up to date</div>
-            <div class="small text-muted">Requests roll up to the admin desk automatically.</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Operations</div>
+            <div class="h5 fw-semibold mb-1" style="color: var(--mess-on-surface);">Always up to date</div>
+            <div class="small" style="color: var(--mess-on-surface-variant);">Requests roll up to the admin desk automatically.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Features -->
   <section class="row g-4 align-items-stretch">
     <div class="col-12 col-lg-6">
-      <div class="card card-mess h-100 p-4">
+      <div class="card-mess h-100 p-4">
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <div class="h5 mb-0 fw-semibold"><i class="bi bi-stars me-2 text-warning"></i>What students can do</div>
+          <div class="h5 mb-0 fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-stars me-2" style="color: var(--mess-tertiary-container);"></i>What students can do</div>
         </div>
         <ul class="list-unstyled mb-0">
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Mark a single meal absence (breakfast, lunch, or dinner)</li>
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Apply multi-day leave for all meals</li>
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Review history and cancel upcoming requests</li>
-          <li class="d-flex gap-2"><i class="bi bi-check-circle text-success"></i> See today’s meal status at a glance</li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Mark a single meal absence (breakfast, lunch, or dinner)</span></li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Apply multi-day leave for all meals</span></li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Review history and cancel upcoming requests</span></li>
+          <li class="d-flex gap-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">See today's meal status at a glance</span></li>
         </ul>
       </div>
     </div>
     <div class="col-12 col-lg-6">
-      <div class="card card-mess h-100 p-4">
+      <div class="card-mess h-100 p-4">
         <div class="d-flex align-items-center justify-content-between mb-3">
-          <div class="h5 mb-0 fw-semibold"><i class="bi bi-shop me-2 text-danger"></i>What the mess team gets</div>
+          <div class="h5 mb-0 fw-semibold" style="color: var(--mess-on-surface);"><i class="bi bi-shop me-2" style="color: var(--mess-error);"></i>What the mess team gets</div>
         </div>
         <ul class="list-unstyled mb-0">
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Live absentee summaries for breakfast, lunch & dinner</li>
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Searchable dashboards with filters by date</li>
-          <li class="d-flex gap-2 mb-2"><i class="bi bi-check-circle text-success"></i> Notification badges for fresh submissions</li>
-          <li class="d-flex gap-2"><i class="bi bi-check-circle text-success"></i> Django Admin still available for deep database work</li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Live absentee summaries for breakfast, lunch &amp; dinner</span></li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Searchable dashboards with filters by date</span></li>
+          <li class="d-flex gap-2 mb-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Notification badges for fresh submissions</span></li>
+          <li class="d-flex gap-2 feature-item"><i class="bi bi-check-circle" style="color: var(--mess-success);"></i> <span style="color: var(--mess-on-surface);">Django Admin available for deep database work</span></li>
         </ul>
       </div>
     </div>

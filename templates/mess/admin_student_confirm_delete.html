@@ -4,11 +4,11 @@
 {% block admin_main %}
   <div class="row justify-content-center">
     <div class="col-12 col-md-8 col-lg-6">
-      <div class="card card-mess border-danger">
+      <div class="card-mess border-danger">
         <div class="card-body p-4">
-          <div class="h4 fw-semibold text-danger mb-2">Delete student account</div>
-          <p class="text-muted mb-4">
-            This will permanently remove <span class="fw-semibold text-body">{{ profile.full_name }}</span>
+          <div class="h4 fw-bold mb-2" style="color: var(--mess-error);">Delete student account</div>
+          <p class="mb-4" style="color: var(--mess-on-surface-variant);">
+            This will permanently remove <span class="fw-semibold" style="color: var(--mess-on-surface);">{{ profile.full_name }}</span>
             ({{ profile.usn }}) and all associated meal absence and leave records.
           </p>
 
